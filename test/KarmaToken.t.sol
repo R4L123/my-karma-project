@@ -18,14 +18,14 @@ contract KarmaTokenTest is Test {
         // deployment et creation fictif d'1 million de token
         vm.startPrank(deployer);
         karmaToken = new KarmaToken("KarmaToken", "KRM", 1000000);
-        
-        // distribution initiale sécurisée 
+
+        // distribution initiale sécurisée
         bool s1 = karmaToken.transfer(user1, 1000 * 10 ** karmaToken.decimals());
-        require(s1==true, "Transfer failed");
-        
+        require(s1 == true, "Transfer failed");
+
         bool s2 = karmaToken.transfer(user2, 500 * 10 ** karmaToken.decimals());
-        require(s2==true, "Transfer failed");
-        
+        require(s2 == true, "Transfer failed");
+
         vm.stopPrank();
     }
 
@@ -54,11 +54,11 @@ contract KarmaTokenTest is Test {
     function test_GiveKarma() public {
         vm.startPrank(user1);
         /* * Notes Test:
-         * Verifie la reception des Tokens par l'user2 
+         * Verifie la reception des Tokens par l'user2
          */
         karmaToken.giveKarma(user2, 50);
         vm.stopPrank();
-    
+
         assertEq(karmaToken.karmaScores(user2), 50);
     }
 
@@ -71,21 +71,19 @@ contract KarmaTokenTest is Test {
          */
 
         vm.expectRevert("Vous ne pouvez pas vous donner du Karma a vous meme");
-        
+
         karmaToken.giveKarma(user1, 10);
         vm.stopPrank();
     }
 
     function test_Revert_MintingAsNonOwner() public {
         vm.startPrank(user1);
-        
+
         /* * Notes Test:
          * Doit retourner l'erreur car seulement l'Owner peut minter des nouveaux token
          */
-        vm.expectRevert(
-            abi.encodeWithSignature("OwnableUnauthorizedAccount(address)", user1)
-        );
-        
+        vm.expectRevert(abi.encodeWithSignature("OwnableUnauthorizedAccount(address)", user1));
+
         karmaToken.mintNewTokens(100);
         vm.stopPrank();
     }

@@ -16,11 +16,7 @@ contract KarmaToken is ERC20, Ownable {
     event KarmaGiven(address indexed giver, address indexed receiver, uint256 amount);
 
     // Le créateur du contrat définit le nom et le symbole du token, et la supply initiale.
-    constructor(
-        string memory name,
-        string memory symbol,
-        uint256 initialSupply
-    )
+    constructor(string memory name, string memory symbol, uint256 initialSupply)
         ERC20(name, symbol)
         Ownable(msg.sender)
     {
@@ -39,7 +35,7 @@ contract KarmaToken is ERC20, Ownable {
 
     function giveKarma(address _receiver, uint256 _amount) external {
         require(_receiver != address(0), "Le receveur ne peut pas etre l'adresse 0");
-        require(_receiver != msg.sender , "Vous ne pouvez pas vous donner du Karma a vous meme");
+        require(_receiver != msg.sender, "Vous ne pouvez pas vous donner du Karma a vous meme");
         require(_amount > 0, "Le montant de Karma doit etre superieur a zero");
 
         // Augmente le score de Karma du receveur.

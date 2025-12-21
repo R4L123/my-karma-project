@@ -15,11 +15,11 @@ contract KarmaTokenTest is Test {
         user1 = makeAddr("user1");
         user2 = makeAddr("user2");
 
-        // deployment et creation fictif d'1 million de token
+        // deployment et creation de 1 million de token
         vm.startPrank(deployer);
         karmaToken = new KarmaToken("KarmaToken", "KRM", 1000000);
 
-        // distribution initiale sécurisée
+        // distribution 
         bool s1 = karmaToken.transfer(user1, 1000 * 10 ** karmaToken.decimals());
         require(s1 == true, "Transfer failed");
 
@@ -41,7 +41,7 @@ contract KarmaTokenTest is Test {
     function test_Transfer() public {
         vm.startPrank(user1);
         /* * Notes Test:
-         * Verifie la reception des Tokens par l'user2 depuis le wallet de l'user1
+         * Verifie la reception des Tokens par l'user2 depuis l'user1
          */
         bool success = karmaToken.transfer(user2, 100 * (10 ** karmaToken.decimals()));
         assertTrue(success);
@@ -67,7 +67,7 @@ contract KarmaTokenTest is Test {
     function test_Revert_GivingKarmaToUrself() public {
         vm.startPrank(user1);
         /* * Notes Test:
-         * Doit retourner l'erreur car on ne peut pas s'envoyer soit-meme des Tokens
+         * Doit retourner l'erreur car on ne peut pas s'envoyer soit meme des Tokens
          */
 
         vm.expectRevert("Vous ne pouvez pas vous donner du Karma a vous meme");

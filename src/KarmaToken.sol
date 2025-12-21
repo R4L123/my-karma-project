@@ -9,28 +9,24 @@ import "@openzeppelin/contracts/access/Ownable.sol";
  * @dev Les utilisateurs peuvent donner du Karma à d'autres adresses, augmentant leur score de réputation(karma).
  */
 contract KarmaToken is ERC20, Ownable {
-    // Score de Karma pour chaque adresse. Public pour être lisible par des dApps
+    // Score de Karma pour chaque adresse.
     mapping(address => uint256) public karmaScores;
 
-    // Événement émis lorsque du Karma est donné.
     event KarmaGiven(address indexed giver, address indexed receiver, uint256 amount);
 
-    // Le créateur du contrat définit le nom et le symbole du token, et la supply initiale.
     constructor(string memory name, string memory symbol, uint256 initialSupply)
         ERC20(name, symbol)
         Ownable(msg.sender)
     {
-        // Frappe (mint) la supply initiale au déployeur du contrat.
+        // Mint la supply initiale au déployeur du contrat.
         _mint(msg.sender, initialSupply * (10 ** decimals()));
     }
 
     /**
      * @dev Permet à un détenteur de tokens de donner du Karma à une autre adresse.
      * Cette fonction ne transfère PAS de tokens, elle augmente seulement le karma du recepient.
-     * Le montant de Karma donné est purement symbolique ici.
-     *
      * @param _receiver L'adresse qui reçoit le Karma.
-     * @param _amount Le montant de Karma symbolique donné.
+     * @param _amount Le montant de Karma 
      */
 
     function giveKarma(address _receiver, uint256 _amount) external {
@@ -39,16 +35,15 @@ contract KarmaToken is ERC20, Ownable {
         require(_amount > 0, "Le montant de Karma doit etre superieur a zero");
 
         // Augmente le score de Karma du receveur.
-        // On n'utilise pas 'unchecked' car un overflow ici serait une erreur logique.
         karmaScores[_receiver] += _amount;
 
-        // Émet un événement pour que les dApps puissent suivre les donations de Karma.
+        // Emet un événement pour que les dApps (vesting)
         emit KarmaGiven(msg.sender, _receiver, _amount);
     }
 
     /**
-     * @dev Fonction pour le propriétaire pour modifier manuellement le score de Karma.
-     * Peut être utilisé pour corriger des abus ou récompenser des actions exceptionnelles.
+     * @dev Fonction pour le propriétaire pour modifier manuellement le score de karma
+     * Utiliser pour corriger des abus ou récompenser des actions exceptionnelles.
      * @param _target L'adresse dont le score de Karma doit être changé.
      * @param _newScore Le nouveau score de Karma pour cette adresse.
      */

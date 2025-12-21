@@ -13,21 +13,17 @@ contract KarmaVesting is Ownable {
     uint64 public immutable start;
     uint64 public immutable cliff;
     uint64 public immutable duration;
-    
+
     uint256 public released;
 
     event TokensReleased(uint256 amount);
 
-    constructor(
-        address _token,
-        address _beneficiary,
-        uint64 _start,
-        uint64 _cliffDuration,
-        uint64 _duration
-    ) Ownable(msg.sender) {
+    constructor(address _token, address _beneficiary, uint64 _start, uint64 _cliffDuration, uint64 _duration)
+        Ownable(msg.sender)
+    {
         require(_beneficiary != address(0), "Beneficiaire zero");
         require(_cliffDuration <= _duration, "Cliff plus long que duration");
-        
+
         token = IERC20(_token);
         beneficiary = _beneficiary;
         start = _start;

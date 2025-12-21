@@ -19,7 +19,7 @@ contract KarmaTokenTest is Test {
         vm.startPrank(deployer);
         karmaToken = new KarmaToken("KarmaToken", "KRM", 1000000);
 
-        // distribution 
+        // distribution
         bool s1 = karmaToken.transfer(user1, 1000 * 10 ** karmaToken.decimals());
         require(s1 == true, "Transfer failed");
 

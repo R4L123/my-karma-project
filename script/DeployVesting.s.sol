@@ -17,15 +17,10 @@ contract DeployVesting is Script {
 
         KarmaToken token = new KarmaToken("Karma", "KRM", 1000000);
 
-        KarmaVesting vesting = new KarmaVesting(
-            address(token),
-            beneficiaryAddress,
-            uint64(block.timestamp),
-            90 days,
-            365 days
-        );
+        KarmaVesting vesting =
+            new KarmaVesting(address(token), beneficiaryAddress, uint64(block.timestamp), 90 days, 365 days);
 
-        token.safeTransfer(address(vesting), 100000 * 10**18);
+        token.safeTransfer(address(vesting), 100000 * 10 ** 18);
 
         vm.stopBroadcast();
     }

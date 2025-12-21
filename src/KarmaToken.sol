@@ -26,7 +26,7 @@ contract KarmaToken is ERC20, Ownable {
      * @dev Permet à un détenteur de tokens de donner du Karma à une autre adresse.
      * Cette fonction ne transfère PAS de tokens, elle augmente seulement le karma du recepient.
      * @param _receiver L'adresse qui reçoit le Karma.
-     * @param _amount Le montant de Karma 
+     * @param _amount Le montant de Karma
      */
 
     function giveKarma(address _receiver, uint256 _amount) external {

@@ -35,9 +35,6 @@ contract KarmaVesting is Ownable {
         duration = _duration;
     }
 
-    /**
-     * @dev Calcule le montant qui peut etre retire
-     */
     function vestedAmount(uint64 timestamp) public view returns (uint256) {
         uint256 totalAllocation = token.balanceOf(address(this)) + released;
 
@@ -50,9 +47,6 @@ contract KarmaVesting is Ownable {
         }
     }
 
-    /**
-     * @dev Libere les jetons acquis pour le beneficiaire.
-     */
     function release() public {
         uint256 amount = vestedAmount(uint64(block.timestamp)) - released;
         require(amount > 0, "Rien a liberer");
